@@ -1,19 +1,10 @@
-import torchvision
-from ipywidgets import IntSlider, Output
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from PIL import Image
 import torchvision.transforms as transforms
-import torchvision.models as models
 import copy
-import datetime
-import requests
-import urllib.request
-import subprocess
-import os
-from os import environ
 import matplotlib.pyplot as plt
 
 

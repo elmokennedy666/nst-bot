@@ -1,26 +1,11 @@
-import telebot
-import torchvision
-from ipywidgets import IntSlider, Output
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import matplotlib.pyplot as plt
-from PIL import Image
-import torchvision.transforms as transforms
-import torchvision.models as models
-import copy
-import datetime
-import requests
-import urllib.request
-import subprocess
 import os
-from os import environ
-from telebot import types
-from transforming_functions import run_style_transfer, cnn_normalization_std, cnn_normalization_mean, content_layers_default, loader, unload, image_loader
-import heroku
-from flask import Flask, request
 
+import telebot
+import torch
+from flask import Flask, request
+from telebot import types
+
+from transforming_functions import run_style_transfer, cnn_normalization_std, cnn_normalization_mean, unload, image_loader
 
 
 def init_():
