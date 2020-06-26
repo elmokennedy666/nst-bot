@@ -1,5 +1,4 @@
 import os
-
 import telebot
 import torch
 from flask import Flask, request
