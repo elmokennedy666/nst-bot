@@ -26,10 +26,6 @@ def image_loader(image_name):
     return image.to(device, torch.float)
 
 
-
-
-
-
 def unload(image_name):
     transforming = transforms.Compose([
             transforms.ToPILImage()

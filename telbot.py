@@ -60,7 +60,6 @@ def init_():
 
     @bot.message_handler(content_types=['photo'])
     def get_img(message):
-
         style_file_id, content_file_id = message.photo[-2].file_id, message.photo[-1].file_id
         bot.send_message(message.chat.id, bot_transfer_text)
         save_image(message.chat.id, style_file_id, '_style.jpg')
