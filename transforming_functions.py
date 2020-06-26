@@ -12,7 +12,7 @@ import copy
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-imsize = 256
+imsize = 200
 
 loader = transforms.Compose([
     transforms.Resize(imsize),
