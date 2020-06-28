@@ -108,12 +108,12 @@ def start():
         if message.chat.id in id:
             if not id[message.chat.id]['style']:
                 id[message.chat.id]['style'] = message.photo[-1].file_id
-                save_image(message.chat.id, id[message.chat.id]['style'], 'styled.jpg')
+                save_image(message.chat.id, id[message.chat.id]['style'], '_style.jpg')
                 bot.send_message(message.chat.id, bot_content)
             elif not id[message.chat.id]['content']:
                 id[message.chat.id]['content'] = message.photo[-1].file_id
-
                 save_image(message.chat.id, id[message.chat.id]['content'], '_content.jpg')
+                #save_image(message.chat.id, id[message.chat.id]['style'] + '_style.jpg')
                 content_img = image_loader(str(message.chat.id + '_content.jpg'))
                 input_img = image_loader(str(message.chat.id + '_content.jpg'))
                 style_img = image_loader(str(message.chat.id + '_style.jpg'))
