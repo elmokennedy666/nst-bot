@@ -23,6 +23,7 @@ loader = transforms.Compose([
 def image_loader(image_name):
     image = Image.open(image_name)
     image = loader(image).unsqueeze(0)
+    time.sleep(5)
     return image.to(device, torch.float)
 
 
@@ -43,6 +44,7 @@ class ContentLoss(nn.Module):
 
     def forward(self, input):
         self.loss = F.mse_loss(input, self.target)
+        time.sleep(5)
         return input
 
 def gram_matrix(input):
@@ -51,6 +53,7 @@ def gram_matrix(input):
     features = input.view(batch_size * h, w * f_map_num)
 
     G = torch.mm(features, features.t())
+    time.sleep(5)
 
     return G.div(batch_size * h * w * f_map_num)
 
@@ -63,6 +66,7 @@ class StyleLoss(nn.Module):
     def forward(self, input):
         G = gram_matrix(input)
         self.loss = F.mse_loss(G, self.target)
+        time.sleep(5)
         return input
 
 cnn_normalization_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
@@ -75,6 +79,7 @@ class Normalization(nn.Module):
         self.std = torch.tensor(std).view(-1, 1, 1)
 
     def forward(self, img):
+        time.sleep(5)
         return (img - self.mean) / self.std
 
 
@@ -140,6 +145,7 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
 def get_input_optimizer(input_img):
 
     optimizer = optim.LBFGS([input_img.requires_grad_()])
+    time.sleep(10)
     return optimizer
 
 
@@ -189,7 +195,7 @@ def run_style_transfer(cnn, normalization_mean, normalization_std,
         optimizer.step(closure)
 
     input_img.data.clamp_(0, 1)
-    time.sleep(120)
+    time.sleep(30)
 
 
     return input_img

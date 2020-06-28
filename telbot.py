@@ -44,9 +44,7 @@ def start():
 
     bot_help = '''
     
-    You can use command /style to send style image \n
-    
-    And command /content to send content image \n
+    Send me 2 pictures in 1 message
     
     I will transform style from style picture to content picture!
     
@@ -69,6 +67,8 @@ def start():
         input_img = image_loader(str(message.chat.id) + '_content.jpg')
         cnn = torch.load('m.pth')
         transformed_image = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, style_img, content_img, input_img, 200)
+        import time
+        time.sleep(100)
         unload(transformed_image).save(str(message.chat.id) + '_transformed.jpg')
         with open(str(message.chat.id) + '_transformed.jpg', 'rb') as file_read:
             bot.send_photo(message.chat.id, file_read)
