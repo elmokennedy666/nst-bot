@@ -136,7 +136,7 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
             break
 
     model = model[:(i + 1)]
-    time.sleep(30)
+    time.sleep(10)
 
 
     return model, style_losses, content_losses

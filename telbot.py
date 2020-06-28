@@ -41,13 +41,23 @@ def start():
     
     Send me 2 pictures and i wll show you the result!
     
+    Other functions is /help, /transform
+    
     '''
 
     bot_help = '''
     
-    Send me 2 pictures in 1 message
+    Send me 2 pictures in 1 message, using /transform command
     
     I will transform style from style picture to content picture!
+    
+    '''
+
+
+    bot_start_transform =_text = '''
+    
+    Hello! At first send me style image and then content image!
+    
     
     '''
 
@@ -64,6 +74,9 @@ def start():
     Please, wait a couple of minutes, \n
     I will send you transformed image, when it wll be ready!
     '''
+
+
+
     '''
     @bot.message_handler(content_types=['photo'])
     def get_img(message):
@@ -83,6 +96,10 @@ def start():
             bot.send_photo(message.chat.id, file_read)
     '''
 
+    @bot.message_handler(commands=['transform'])
+    def transform(message):
+        id[message.chat.id] = {'started': True, 'style': False, 'content': False}
+        bot.send_message(message.chat.id, bot_start_transform)
 
     @bot.message_handler(content_types=['photo'])
     def get_image(message):
