@@ -1,4 +1,4 @@
-from telbot import init_
+from telbot import start
 
 if __name__ == '__main__':
-    init_()
+    start()

@@ -7,7 +7,7 @@ from telebot import types
 from transforming_functions import run_style_transfer, cnn_normalization_std, cnn_normalization_mean, unload, image_loader
 
 
-def init_():
+def start():
     bot = telebot.TeleBot('1155891195:AAF4_6_WxZSLOzIoE8WaU8X1pntM8zpSmg4', threaded=False)
     server = Flask(__name__)
 
