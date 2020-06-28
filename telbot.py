@@ -75,6 +75,12 @@ def init_():
 
 
 
+'''
+    @bot.message_handler(content_types=['photo'])
+    def get_image(message):
+        style_file_id = message.photo[-1].file_id
+'''
+
     def save_image(id, file_id, name):
         image = bot.get_file(file_id)
         with open(str(id) + name, 'wb') as file_style:
