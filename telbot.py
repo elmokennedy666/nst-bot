@@ -51,6 +51,14 @@ def start():
     
     '''
 
+
+    bot_content = '''
+    
+    i got style image, now send me content image! 
+    
+    '''
+
+
     bot_transfer_text = '''
     I started transforming! \n
     Please, wait a couple of minutes, \n
@@ -74,26 +82,31 @@ def start():
         with open(str(message.chat.id) + '_transformed.jpg', 'rb') as file_read:
             bot.send_photo(message.chat.id, file_read)
     '''
+
+
     @bot.message_handler(content_types=['photo'])
     def get_image(message):
+        cnn = torch.load('m.pth')
         #check user id
         if message.chat.id in id:
             if not id[message.chat.id]['style']:
                 id[message.chat.id]['style'] = message.photo[-1].file_id
-                style_img = id[message.chat.id]['style']
-
+                save_image(message.chat.id, id[message.chat.id]['style'], 'styled.jpg')
+                bot.send_message(message.chat.id, bot_content)
             elif not id[message.chat.id]['content']:
                 id[message.chat.id]['content'] = message.photo[-1].file_id
-                content_img = id[message.chat.id]['content']
-                input_img = id[message.chat.id]['content']
 
-            cnn = torch.load('m.pth')
-                #bot.send_message(message.chat.id, 'Transfer started, wait ~1 min')
-            transformed_image = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, style_img,
+                save_image(message.chat.id, id[message.chat.id]['content'], '_content.jpg')
+                content_img = image_loader(str(message.chat.id + '_content.jpg'))
+                input_img = image_loader(str(message.chat.id + '_content.jpg'))
+                style_img = image_loader(str(message.chat.id + '_style.jpg'))
+                bot.send_message(message.chat.id, bot_transfer_text)
+                transformed_image = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, style_img,
                                                        content_img, input_img, 200)
-            unload(transformed_image).save(str(message.chat.id) + '_transformed.jpg')
-            with open(str(message.chat.id) + '_transformed.jpg', 'rb') as f:
-                bot.send_photo(message.chat.id, f)
+                unload(transformed_image).save(str(message.chat.id) + '_transformed.jpg')
+                with open(str(message.chat.id) + '_transformed.jpg', 'rb') as file_transfered:
+                    bot.send_photo(message.chat.id, file_transfered)
+
 
     def save_image(id, file_id, name):
         image = bot.get_file(file_id)
