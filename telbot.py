@@ -10,6 +10,7 @@ from transforming_functions import run_style_transfer, cnn_normalization_std, cn
 def start():
     bot = telebot.TeleBot('1393457415:AAGHThyEYg1-uLpRXsgN31koxDAI62d6vXM', threaded=False)
     server = Flask(__name__)
+    id = {}
 
     @server.route('/' + '1393457415:AAGHThyEYg1-uLpRXsgN31koxDAI62d6vXM', methods=['POST'])
     def get_message():
@@ -55,7 +56,7 @@ def start():
     Please, wait a couple of minutes, \n
     I will send you transformed image, when it wll be ready!
     '''
-
+    '''
     @bot.message_handler(content_types=['photo'])
     def get_img(message):
         style_file_id, content_file_id = message.photo[-2].file_id, message.photo[-1].file_id
@@ -72,7 +73,27 @@ def start():
         unload(transformed_image).save(str(message.chat.id) + '_transformed.jpg')
         with open(str(message.chat.id) + '_transformed.jpg', 'rb') as file_read:
             bot.send_photo(message.chat.id, file_read)
+    '''
+    @bot.message_handler(content_types=['photo'])
+    def get_image(message):
+        #check user id
+        if message.chat.id in id:
+            if not id[message.chat.id]['style']:
+                id[message.chat.id]['style'] = message.photo[-1].file_id
+                style_img = id[message.chat.id]['style']
 
+            elif not id[message.chat.id]['content']:
+                id[message.chat.id]['content'] = message.photo[-1].file_id
+                content_img = id[message.chat.id]['content']
+                input_img = id[message.chat.id]['content']
+
+            cnn = torch.load('m.pth')
+                #bot.send_message(message.chat.id, 'Transfer started, wait ~1 min')
+            transformed_image = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std, style_img,
+                                                       content_img, input_img, 200)
+            unload(transformed_image).save(str(message.chat.id) + '_transformed.jpg')
+            with open(str(message.chat.id) + '_transformed.jpg', 'rb') as f:
+                bot.send_photo(message.chat.id, f)
 
     def save_image(id, file_id, name):
         image = bot.get_file(file_id)
