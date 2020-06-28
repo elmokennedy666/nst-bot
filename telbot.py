@@ -8,10 +8,10 @@ from transforming_functions import run_style_transfer, cnn_normalization_std, cn
 
 
 def start():
-    bot = telebot.TeleBot('1155891195:AAF4_6_WxZSLOzIoE8WaU8X1pntM8zpSmg4', threaded=False)
+    bot = telebot.TeleBot('1393457415:AAGHThyEYg1-uLpRXsgN31koxDAI62d6vXM', threaded=False)
     server = Flask(__name__)
 
-    @server.route('/' + '1155891195:AAF4_6_WxZSLOzIoE8WaU8X1pntM8zpSmg4', methods=['POST'])
+    @server.route('/' + '1393457415:AAGHThyEYg1-uLpRXsgN31koxDAI62d6vXM', methods=['POST'])
     def get_message():
         bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
         return "!", 200
@@ -19,7 +19,7 @@ def start():
     @server.route("/")
     def webhook():
         bot.remove_webhook()
-        bot.set_webhook(url='https://nst-bot.herokuapp.com/' + '1155891195:AAF4_6_WxZSLOzIoE8WaU8X1pntM8zpSmg4')
+        bot.set_webhook(url='https://nst-bot.herokuapp.com/' + '1393457415:AAGHThyEYg1-uLpRXsgN31koxDAI62d6vXM')
         return "!", 200
 
 

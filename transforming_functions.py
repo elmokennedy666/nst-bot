@@ -5,7 +5,7 @@ import torch.optim as optim
 from PIL import Image
 import torchvision.transforms as transforms
 import copy
-
+import time
 
 
 
@@ -131,8 +131,8 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
             break
 
     model = model[:(i + 1)]
-    import time
     time.sleep(30)
+
 
     return model, style_losses, content_losses
 
@@ -189,6 +189,8 @@ def run_style_transfer(cnn, normalization_mean, normalization_std,
         optimizer.step(closure)
 
     input_img.data.clamp_(0, 1)
+    time.sleep(120)
+
 
     return input_img
 
